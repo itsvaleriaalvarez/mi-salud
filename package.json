@@ -30,15 +30,16 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "gh-pages": "^6.3.0",
     "typescript": "~6.0.3"
   },
-  "scripts": {
+"scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
-  },
-  "private": true
+    "lint": "expo lint",
+    "predeploy": "expo export -p web",
+    "deploy": "gh-pages --nojekyll -d dist"
+  }
 }
