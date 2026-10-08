@@ -1,41 +1,68 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { colors } from '../constants/colors';
 
-export default function TabBar() {
+type Props = {
+  onAddPress: () => void;
+};
+
+export default function TabBar({ onAddPress }: Props) {
   return (
-    <View style={styles.bar}>
-      <Ionicons name="heart-outline" size={24} color={colors.pink} />
-      <Ionicons name="calendar-clear-outline" size={22} color="#FFFFFF" />
-      <View style={styles.addButton}>
-        <Ionicons name="add" size={30} color={colors.dark} />
+    <View style={styles.container}>
+      <View style={styles.tab}>
+        <Ionicons
+          name="home-outline"
+          size={24}
+          color={colors.dark}
+        />
       </View>
-      <Ionicons name="chatbox-ellipses-outline" size={22} color="#FFFFFF" />
-      <Ionicons name="person-outline" size={22} color="#FFFFFF" />
+
+      <Pressable
+        style={styles.addButton}
+        onPress={onAddPress}
+      >
+        <Ionicons
+          name="add"
+          size={30}
+          color={colors.dark}
+        />
+      </Pressable>
+
+      <View style={styles.tab}>
+        <Ionicons
+          name="person-outline"
+          size={24}
+          color={colors.dark}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  bar: {
+  container: {
+    height: 80,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: colors.dark,
-    borderRadius: 28,
-    height: 64,
-    marginHorizontal: 20,
-    marginBottom: 8,
+    backgroundColor: colors.background,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5E5',
   },
-  addButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: colors.pink,
-    justifyContent: 'center',
+
+  tab: {
+    width: 50,
+    height: 50,
     alignItems: 'center',
-    marginTop: -36,
-    borderWidth: 4,
-    borderColor: colors.background,
+    justifyContent: 'center',
+  },
+
+  addButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.yellow,
   },
 });
