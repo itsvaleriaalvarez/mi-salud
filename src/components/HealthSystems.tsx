@@ -1,66 +1,115 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../constants/colors';
 
-export default function HealthSystems() {
+export type HealthSystem = {
+  name: string;
+  score: number;
+};
+
+type Props = {
+  systems: HealthSystem[];
+};
+
+export default function HealthSystems({ systems }: Props) {
   return (
-    <View style={styles.section}>
-      <View style={styles.titleRow}>
-        <Text style={styles.title}>Sistemas del cuerpo</Text>
-        <View style={styles.filter}>
-          <Text style={styles.filterText}>Todos</Text>
-          <Ionicons name="chevron-down" size={14} color="#FFFFFF" />
-        </View>
-      </View>
-      <View style={styles.item}>
-        <View style={styles.icon}>
-          <MaterialCommunityIcons name="dna" size={20} color={colors.text} />
-        </View>
-        <View style={styles.info}>
-          <Text style={styles.name}>Sistema endocrino</Text>
-          <View style={styles.track}>
-            <View style={styles.fill} />
+    <View>
+      <Text style={styles.title}>Sistemas del cuerpo</Text>
+
+      <ScrollView style={styles.list}>
+        {systems.map((system, index) => (
+          <View key={index} style={styles.item}>
+            <View style={styles.icon}>
+              <MaterialCommunityIcons
+                name="heart-pulse"
+                size={20}
+                color={colors.text}
+              />
+            </View>
+
+            <View style={styles.info}>
+              <Text style={styles.name}>{system.name}</Text>
+
+              <View style={styles.track}>
+                <View
+                  style={[
+                    styles.fill,
+                    { width: `${system.score * 10}%` },
+                  ]}
+                />
+              </View>
+            </View>
+
+            <Text style={styles.value}>{system.score}</Text>
+
+            <Text style={styles.max}>de 10</Text>
           </View>
-        </View>
-        <Text style={styles.value}>8.3</Text>
-        <Text style={styles.max}>de 10</Text>
-      </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  section: { gap: 14 },
-  titleRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: 12,
   },
-  title: { fontSize: 22, fontWeight: 'bold', color: colors.text },
-  filter: {
+
+  item: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    backgroundColor: colors.dark,
-    borderRadius: 16,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    gap: 12,
+    marginBottom: 12,
   },
-  filterText: { fontSize: 13, color: '#FFFFFF' },
-  item: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+
   icon: {
     width: 40,
     height: 40,
     borderRadius: 20,
     backgroundColor: colors.yellow,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  info: { flex: 1, gap: 6 },
-  name: { fontSize: 14, color: colors.text },
-  track: { height: 12, borderRadius: 6, backgroundColor: colors.soft },
-  fill: { width: '83%', height: 12, borderRadius: 6, backgroundColor: colors.yellow },
-  value: { fontSize: 22, fontWeight: 'bold', color: colors.text },
-  max: { fontSize: 11, color: colors.textMuted },
+
+  info: {
+    flex: 1,
+  },
+
+  name: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 6,
+  },
+
+  track: {
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#E5E5E5',
+    overflow: 'hidden',
+  },
+
+  fill: {
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: colors.yellow,
+  },
+
+  value: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.text,
+  },
+
+  max: {
+    fontSize: 12,
+    color: colors.textMuted,
+  },
+
+  list: {
+    maxHeight: 104,
+  },
 });
